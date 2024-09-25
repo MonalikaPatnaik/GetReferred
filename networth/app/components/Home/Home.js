@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Home = () => {
   return (
-    <section className="flex flex-col md:flex-row h-[calc(100vh-80px)] bg-white">
+    <section className="flex flex-col md:flex-row h-[calc(100vh-80px)]">
       {/* Left Side (70%) */}
       <div className="flex-1 md:flex-[0.7] flex flex-col items-center justify-center text-center px-4">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Connect with Top Referrers in Your Industry</h1>

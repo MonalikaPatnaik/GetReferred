@@ -1,21 +1,101 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-teal-600">Referly</h1>
-          <nav>
-            <ul className="flex space-x-4">
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">How it Works</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">For Referrers</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">For Referees</a></li>
-              <li><a href="#" className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Sign Up</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-  )
-}
+      <div className="container mx-auto px-4 py-6 flex items-center">
+        {/* Logo on the left */}
+        <h1 className="text-2xl font-bold text-teal-600">Referly</h1>
 
-export default Navbar
+        <nav className="flex-grow text-center">
+          <ul className="flex justify-center space-x-6">
+            <li>
+              <a
+                href="#"
+                className="text-gray-600 hover:text-teal-600"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  transition: "border-color 0.3s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "teal")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "transparent")
+                }
+              >
+                How it Works
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-gray-600 hover:text-teal-600"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  transition: "border-color 0.3s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "teal")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "transparent")
+                }
+              >
+                For Referrers
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-gray-600 hover:text-teal-600"
+                style={{
+                  borderBottom: "2px solid transparent",
+                  transition: "border-color 0.3s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "teal")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderBottomColor = "transparent")
+                }
+              >
+                For Referees
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="ml-6">
+          <a
+            href="#"
+            className="text-teal-700 hover:text-teal-700 "
+            style={{
+              borderBottom: "2px solid transparent",
+              transition: "border-color 0.3s",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.borderBottomColor = "teal")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.borderBottomColor = "transparent")
+            }
+          >
+            Sign In
+          </a>
+        </div>
+
+        <div className="ml-4">
+          <a
+            href="#"
+            className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-mint-700"
+          >
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
