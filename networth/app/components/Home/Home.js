@@ -1,5 +1,4 @@
-import React from 'react';
-import Img from '../../../public/assets/hero.png';
+import Img from '../../../public/assets/girl.png';
 import Image from 'next/image';
 
 const Home = () => {
