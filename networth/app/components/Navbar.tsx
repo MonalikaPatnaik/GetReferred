@@ -67,9 +67,9 @@ const Navbar = () => {
         </nav>
 
         <div className="ml-6">
-          <a
-            href="#"
-            className="text-teal-700 hover:text-teal-700 "
+          <Link
+            href="/login"
+            className="text-teal-700 hover:text-teal-700"
             style={{
               borderBottom: "2px solid transparent",
               transition: "border-color 0.3s",
@@ -82,16 +82,16 @@ const Navbar = () => {
             }
           >
             Sign In
-          </a>
+          </Link>
         </div>
 
         <div className="ml-4">
-          <a
-            href="#"
+          <Link
+            href="/signup"
             className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-mint-700"
           >
             Sign Up
-          </a>
+          </Link>
         </div>
       </div>
     </header>
