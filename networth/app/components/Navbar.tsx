@@ -5,7 +5,7 @@ const Navbar = () => {
     <header className="bg-white shadow-md">
       <div className="container mx-auto px-4 py-6 flex items-center">
         {/* Logo on the left */}
-        <h1 className="text-2xl font-bold text-teal-600">Referly</h1>
+        <h1 className="text-2xl font-bold text-teal-600">ReferAl</h1>
 
         <nav className="flex-grow text-center">
           <ul className="flex justify-center space-x-6">
