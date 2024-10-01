@@ -1,11 +1,30 @@
-"use client"; // Add this to make it a Client Component
+"use client";
 
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
 
 type Role = "referee" | "referrer";
 
 const Login: React.FC = () => {
   const [role, setRole] = useState<Role>("referee");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+ 
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in:", userCredential.user);
+      window.location.assign("/");
+
+    } catch (error:any) {
+      console.error("Error logging in:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-teal-50">
@@ -14,7 +33,6 @@ const Login: React.FC = () => {
           Login
         </h1>
 
-        {/* Slider/Toggle for Role Selection */}
         <div className="flex justify-center mb-6">
           <button
             className={`px-4 py-2 rounded-l-lg focus:outline-none ${
@@ -38,14 +56,16 @@ const Login: React.FC = () => {
           </button>
         </div>
 
-        {/* Form Fields for Username and Password Based on Role */}
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-teal-700">Username</label>
+            <label className="block text-teal-700">Email</label>
             <input
-              type="text"
+              type="email"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-teal-600"
-              placeholder="Your Username"
+              placeholder="Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="mb-4">
@@ -54,8 +74,12 @@ const Login: React.FC = () => {
               type="password"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-teal-600"
               placeholder="Your Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
+
           <button
             type="submit"
             className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition-colors"
