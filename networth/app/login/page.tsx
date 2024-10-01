@@ -4,7 +4,6 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
-
 type Role = "referee" | "referrer";
 
 const Login: React.FC = () => {
@@ -16,12 +15,10 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
- 
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in:", userCredential.user);
       window.location.assign("/");
-
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error logging in:", error);
     }
   };
@@ -33,7 +30,8 @@ const Login: React.FC = () => {
           Login
         </h1>
 
-        <div className="flex justify-center mb-6">
+        {/* Role Selection */}
+        {/* <div className="flex justify-center mb-6">
           <button
             className={`px-4 py-2 rounded-l-lg focus:outline-none ${
               role === "referee"
@@ -54,8 +52,9 @@ const Login: React.FC = () => {
           >
             Referrer
           </button>
-        </div>
+        </div> */}
 
+        {/* Form Fields */}
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-teal-700">Email</label>
@@ -84,9 +83,17 @@ const Login: React.FC = () => {
             type="submit"
             className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition-colors"
           >
-            {role === "referee" ? "Login as Referee" : "Login as Referrer"}
+            Login
           </button>
         </form>
+
+        {/* Don't have an account */}
+        <p className="mt-4 text-center">
+          Don&apos;t have an account?{" "}
+          <a href="/signup" className="text-teal-600 hover:underline">
+            Sign up here
+          </a>
+        </p>
       </div>
     </div>
   );

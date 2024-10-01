@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
-import { auth } from "../firebase"; // Make sure firebase is properly initialized
-import { onAuthStateChanged, signOut, User } from "firebase/auth"; // Import 'User' from firebase
-import { FiUser } from "react-icons/fi"; // Icon for account
+import { useState, useEffect, useRef } from "react";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { FiUser } from "react-icons/fi";
 import Link from "next/link";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const accountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -19,60 +21,81 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setCurrentUser(null); // Reset user after logout
+      setCurrentUser(null);
     } catch (error) {
       console.error("Error signing out: ", error);
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        accountRef.current &&
+        !accountRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md relative">
       <div className="container mx-auto px-4 py-6 flex items-center">
-        {/* Logo on the left */}
         <h1 className="text-2xl font-bold text-teal-600">ReferAl</h1>
 
         <nav className="flex-grow text-center">
           <ul className="flex justify-center space-x-6">
-            <li>
-              <Link href="#">How it Works</Link>
-            </li>
-            <li>
-              <Link href="#">For Referrers</Link>
-            </li>
-            <li>
-              <Link href="#">For Referees</Link>
-            </li>
+            <li><Link href="#">How it Works</Link></li>
+            <li><Link href="#">For Referrers</Link></li>
+            <li><Link href="#">For Referees</Link></li>
           </ul>
         </nav>
 
-        {/* Account or Sign In/Up buttons */}
         {currentUser ? (
-          <div className="ml-6 relative flex items-center space-x-2">
-            <FiUser className="text-teal-600" />
+          <div className="ml-6 relative">
             <div
-              className="relative"
+              ref={accountRef}
+              className="flex items-center cursor-pointer p-2 rounded-md hover:bg-gray-100"
               onMouseEnter={() => setIsDropdownVisible(true)}
-              onMouseLeave={() => setIsDropdownVisible(false)}
             >
-              <button className="text-teal-600">{currentUser.displayName || "Account"}</button>
-              {isDropdownVisible && (
-                <div className="absolute mt-2 right-0 bg-white border rounded-md shadow-lg w-48">
-                  <ul className="py-2">
-                    <li>
-                      <Link href="/profile">Profile Settings</Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-teal-50"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              <FiUser className="text-teal-600 mr-2" />
+              <span className="text-teal-600">{currentUser.displayName || "Account"}</span>
             </div>
+            {isDropdownVisible && (
+              <div
+                ref={dropdownRef}
+                className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10"
+                onMouseLeave={() => setIsDropdownVisible(false)}
+              >
+                <ul className="py-2">
+                  <li>
+                    <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-teal-50">
+                      Profile Settings
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/applications" className="block px-4 py-2 text-gray-700 hover:bg-teal-50">
+                      My Applications
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-teal-50"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         ) : (
           <>
