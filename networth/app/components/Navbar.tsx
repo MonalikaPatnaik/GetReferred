@@ -3,6 +3,15 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { FiUser } from "react-icons/fi";
 import Link from "next/link";
+import { doc, getDoc } from "firebase/firestore"; // Import Firestore methods
+
+// type UserSchema = {
+//   uid: string;
+//   name: string;
+//   email: string;
+//   phoneNumber: string;
+//   role: string; // This will hold either 'referrer' or other roles
+// };
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -10,13 +19,48 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       // Assuming user data includes custom fields like role, name, and phoneNumber
+  //       const fetchUserData = async () => {
+  //         // Replace with actual logic to fetch user schema from backend (Firebase Firestore, etc.)
+  //         const userDoc: UserSchema = {
+  //           uid: user.uid,
+  //           name: currentUser.name, // Example data, replace with real data
+  //           email: user.email || "xyz@gmail.com",
+  //           phoneNumber: "(+91)9811077018",
+  //           role: "referrer", // Example data, replace with real data
+  //         };
+  //         setCurrentUser(userDoc);
+  //       };
+  //       fetchUserData();
+  //     } else {
+  //       setCurrentUser(null);
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      setCurrentUser(user);
+      const userDoc = await getDoc(doc(firestore, "users", user.uid));
+      if (userDoc.exists()) {
+        setRole(userDoc.data().role);
+      }
+    } else {
+      setCurrentUser(null);
+      setRole(null);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
+
+
 
   const handleLogout = async () => {
     try {
@@ -52,9 +96,15 @@ const Navbar = () => {
 
         <nav className="flex-grow text-center">
           <ul className="flex justify-center space-x-6">
-            <li><Link href="#">How it Works</Link></li>
-            <li><Link href="#">For Referrers</Link></li>
-            <li><Link href="#">For Referees</Link></li>
+            <li>
+              <Link href="#">How it Works</Link>
+            </li>
+            <li>
+              <Link href="#">For Referrers</Link>
+            </li>
+            <li>
+              <Link href="#">For Referees</Link>
+            </li>
           </ul>
         </nav>
 
@@ -66,7 +116,9 @@ const Navbar = () => {
               onMouseEnter={() => setIsDropdownVisible(true)}
             >
               <FiUser className="text-teal-600 mr-2" />
-              <span className="text-teal-600">{currentUser.displayName || "Account"}</span>
+              <span className="text-teal-600">
+                {currentUser.displayName || "Account"}
+              </span>
             </div>
             {isDropdownVisible && (
               <div
@@ -76,12 +128,25 @@ const Navbar = () => {
               >
                 <ul className="py-2">
                   <li>
-                    <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-teal-50">
-                      Profile Settings
+                    {/* Conditionally rendering the link based on role */}
+                    <Link
+                      href={
+                        User.role === "referrer"
+                          ? "/referrer_dashboard"
+                          : "/profile"
+                      }
+                      className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
+                    >
+                      {currentUser.role === "referrer"
+                        ? "View Dashboard"
+                        : "Profile Settings"}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/applications" className="block px-4 py-2 text-gray-700 hover:bg-teal-50">
+                    <Link
+                      href="/applications"
+                      className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
+                    >
                       My Applications
                     </Link>
                   </li>
