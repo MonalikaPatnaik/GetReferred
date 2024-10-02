@@ -1,4 +1,4 @@
-"use client"; // Make sure it's a Client Component
+"use client";
 
 import { useState } from "react";
 
@@ -47,20 +47,29 @@ const Dashboard: React.FC = () => {
     );
   };
 
+  const pendingApplications = applications.filter(
+    (app) => app.status === "Pending"
+  );
+  const referredApplications = applications.filter(
+    (app) => app.status === "Referred"
+  );
+  const rejectedApplications = applications.filter(
+    (app) => app.status === "Rejected"
+  );
+
   return (
     <div className="min-h-screen bg-blue-50 p-8">
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold text-teal-600 mb-6">
-          Referrer's Dashboard
+          Referrer&apos;s Dashboard
         </h1>
+        <h3>Software Engineer, Google</h3><br></br>
 
-        {/* Dashboard Layout */}
         <div className="grid grid-cols-3 gap-6">
           {/* Left Sidebar */}
           <div className="col-span-1 bg-white rounded-lg shadow-md p-6">
             <ul>
               <li className="mb-4 text-teal-600 font-semibold">Dashboard</li>
-              <li className="mb-4 text-gray-700">Wallet</li>
               <li className="mb-4 text-gray-700">Transactions</li>
               <li className="mb-4 text-gray-700">Analytics</li>
               <li className="mb-4 text-gray-700">Reporting</li>
@@ -68,54 +77,97 @@ const Dashboard: React.FC = () => {
             </ul>
           </div>
 
-          {/* Referred Users */}
+          {/* Main Content */}
           <div className="col-span-2 bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold text-teal-600 mb-4">
-              Referred Users
+              Pending Applications
             </h2>
 
-            {/* Applications List */}
-            {applications.map((application) => (
-              <div
-                key={application.id}
-                className="flex justify-between items-center border-b pb-4 mb-4"
-              >
-                <div>
-                  <p className="text-lg font-semibold text-gray-800">
-                    {application.name}
-                  </p>
-                  <p className="text-gray-600">{application.email}</p>
-                  <p className="text-gray-400">{application.dateApplied}</p>
+            {/* Pending Applications */}
+            {pendingApplications.length > 0 ? (
+              pendingApplications.map((application) => (
+                <div
+                  key={application.id}
+                  className="flex justify-between items-center border-b pb-4 mb-4"
+                >
+                  <div>
+                    <p className="text-lg font-semibold text-gray-800">
+                      {application.name}
+                    </p>
+                    <p className="text-gray-600">{application.email}</p>
+                    <p className="text-gray-400">{application.dateApplied}</p>
+                  </div>
+                  <div className="flex space-x-4">
+                    <button
+                      className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700"
+                      onClick={() => handleReferral(application.id)}
+                    >
+                      Give Referral
+                    </button>
+                    <button
+                      className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                      onClick={() => handleReject(application.id)}
+                    >
+                      Reject App
+                    </button>
+                  </div>
                 </div>
-                <div className="flex space-x-4">
-                  {application.status === "Pending" && (
-                    <>
-                      <button
-                        className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700"
-                        onClick={() => handleReferral(application.id)}
-                      >
-                        Give Referral
-                      </button>
-                      <button
-                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                        onClick={() => handleReject(application.id)}
-                      >
-                        Reject App
-                      </button>
-                    </>
-                  )}
-                  <div
-                    className={`text-sm font-semibold px-3 py-1 rounded-lg ${
-                      application.status === "Referred"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
+              ))
+            ) : (
+              <p className="text-gray-600">No pending applications.</p>
+            )}
+
+            {/* Referred Applications */}
+            <h2 className="text-xl font-bold text-green-600 mt-8 mb-4">
+              Referred Applications
+            </h2>
+            {referredApplications.length > 0 ? (
+              referredApplications.map((application) => (
+                <div
+                  key={application.id}
+                  className="flex justify-between items-center border-b pb-4 mb-4"
+                >
+                  <div>
+                    <p className="text-lg font-semibold text-gray-800">
+                      {application.name}
+                    </p>
+                    <p className="text-gray-600">{application.email}</p>
+                    <p className="text-gray-400">{application.dateApplied}</p>
+                  </div>
+                  <div className="text-sm font-semibold px-3 py-1 rounded-lg bg-green-100 text-green-700">
                     {application.status}
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-gray-600">No referred applications.</p>
+            )}
+
+            {/* Rejected Applications */}
+            <h2 className="text-xl font-bold text-red-600 mt-8 mb-4">
+              Rejected Applications
+            </h2>
+            {rejectedApplications.length > 0 ? (
+              rejectedApplications.map((application) => (
+                <div
+                  key={application.id}
+                  className="flex justify-between items-center border-b pb-4 mb-4"
+                >
+                  <div>
+                    <p className="text-lg font-semibold text-gray-800">
+                      {application.name}
+                    </p>
+                    <p className="text-gray-600">{application.email}</p>
+                    <p className="text-gray-400">{application.dateApplied}</p>
+                  </div>
+                  <div className="text-sm font-semibold px-3 py-1 rounded-lg bg-red-100 text-red-700">
+                    {application.status}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-600">No rejected applications.</p>
+            )}
           </div>
         </div>
       </div>
