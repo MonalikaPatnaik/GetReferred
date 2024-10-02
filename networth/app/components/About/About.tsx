@@ -1,4 +1,3 @@
-"use client";
 import { motion } from "framer-motion";
 
 const companyData = [
@@ -83,7 +82,7 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-const AboutPage = () => {
+const About = () => {
   return (
     <div className="min-h-screen bg-white p-8">
       <motion.h1
@@ -122,4 +121,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default About;
