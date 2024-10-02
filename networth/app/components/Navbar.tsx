@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { FiUser } from "react-icons/fi";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import { doc, getDoc } from "firebase/firestore"; // Import Firestore methods
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [role, setRole] = useState<string | null>(null); // To store user role
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
@@ -131,13 +132,13 @@ useEffect(() => {
                     {/* Conditionally rendering the link based on role */}
                     <Link
                       href={
-                        User.role === "referrer"
+                        role === "referrer"
                           ? "/referrer_dashboard"
                           : "/profile"
                       }
                       className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                     >
-                      {currentUser.role === "referrer"
+                      {role === "referrer"
                         ? "View Dashboard"
                         : "Profile Settings"}
                     </Link>
@@ -182,3 +183,4 @@ useEffect(() => {
 };
 
 export default Navbar;
+
