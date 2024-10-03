@@ -7,7 +7,6 @@ import { auth } from "../firebase";
 type Role = "referee" | "referrer";
 
 const Login: React.FC = () => {
-  const [role, setRole] = useState<Role>("referee");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,31 +29,6 @@ const Login: React.FC = () => {
           Login
         </h1>
 
-        {/* Role Selection */}
-        {/* <div className="flex justify-center mb-6">
-          <button
-            className={`px-4 py-2 rounded-l-lg focus:outline-none ${
-              role === "referee"
-                ? "bg-teal-600 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => setRole("referee")}
-          >
-            Referee
-          </button>
-          <button
-            className={`px-4 py-2 rounded-r-lg focus:outline-none ${
-              role === "referrer"
-                ? "bg-teal-600 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => setRole("referrer")}
-          >
-            Referrer
-          </button>
-        </div> */}
-
-        {/* Form Fields */}
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-teal-700">Email</label>

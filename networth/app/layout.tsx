@@ -1,15 +1,28 @@
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { Metadata } from 'next';
+import Head from 'next/head';
 
+export const metadata: Metadata = {
+  title: 'Referrly',
+  description: 'Where Referrals Meet Results',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }) {
   return (
     <html lang="en">
+      <Head>
+        <title>Referrly</title>
+        <meta name="description" content="Where Referrals Meet Results" />
+        {/* Add the favicon link manually */}
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <body>{children}</body>
     </html>
   )
