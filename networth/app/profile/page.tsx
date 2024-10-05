@@ -1,9 +1,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { FiArrowLeft, FiEdit2, FiTrash2, FiDownload, FiSave } from 'react-icons/fi';
-import Link from 'next/link';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore, auth } from "../firebase";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import OtherActions from '../components/OtherActions';
+import ProfileComponent from '../components/Profile';
+
 interface UserInfo {
     name: string;
     email: string;
@@ -135,17 +139,13 @@ const ProfilePage = () => {
     )
   );
 
-  return (
+  return ( 
+    <>
+    <Navbar />
     <div className="container mx-auto px-4 py-8">
-      <Link href="#" className="flex items-center text-blue-500 mb-6">
-        <FiArrowLeft className="mr-2" />
-        Back
-      </Link>
-      
-      <h1 className="text-3xl font-bold text-center mb-8">Resume</h1>
-      
+      <h1 className="text-3xl font-bold text-center mb-4">Profile</h1> 
       <div className="bg-gray-100 p-4 rounded-lg mb-8 text-center">
-        <p>This is the resume companies will see when you apply</p>
+        <p> Click on the pencil icon to make edits. Do remember to save the changes too.</p>
       </div>
       
       <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
@@ -189,6 +189,11 @@ const ProfilePage = () => {
         </Section>
       </div>
     </div>
+    
+    <ProfileComponent />
+    <OtherActions />
+    <Footer />
+    </>
   );
 };
 
