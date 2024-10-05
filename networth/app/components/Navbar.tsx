@@ -213,8 +213,8 @@ const Navbar = () => {
                           <Link
                             href={
                               role === "referrer"
-                                ? "/Dashboard"
-                                : "/Profile"
+                                ? "/dashboard"
+                                : "/profile"
                             }
                             className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                           >
@@ -225,7 +225,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <Link
-                            href="/Dashboard"
+                            href="/dashboard"
                             className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                           >
                             My Applications
@@ -292,8 +292,8 @@ const Navbar = () => {
                       <Link
                         href={
                           role === "referrer"
-                            ? "/Dashboard"
-                            : "/Profile"
+                            ? "/dashboard"
+                            : "/profile"
                         }
                         className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                       >
@@ -304,7 +304,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        href="/Dashboard"
+                        href="/dashboard"
                         className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                       >
                         My Applications
@@ -326,14 +326,14 @@ const Navbar = () => {
             <>
               <div className="ml-6">
                 <Link
-                  href="/LogIn"
+                  href="/login"
                   className="text-gray-600 hover:text-teal-600"
                 >
                   Sign In
                 </Link>
               </div>
               <div className="ml-4">
-                <Link href="/SignUp">
+                <Link href="/signup">
                   <div className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700">
                     Sign Up
                   </div>
