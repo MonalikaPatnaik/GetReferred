@@ -36,7 +36,7 @@ const OtherActions = () => {
                 Report a Suspicious Activity
               </Link>
               <p className="text-gray-600">
-                Whether it's a bug or malicious user activity, please let us know so we can investigate and take action.
+                Whether it&apos;s a bug or malicious user activity, please let us know so we can investigate and take action.
               </p>
             </li>
             <li className="pb-4">

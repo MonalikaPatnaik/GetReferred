@@ -13,7 +13,7 @@ interface UserInfo {
   gender: string;
 }
 
-const ProfileComponent: React.FC = () => {
+const ProfileDetails: React.FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     name: "",
     email: "",
@@ -65,4 +65,4 @@ const ProfileComponent: React.FC = () => {
   );
 };
 
-export default ProfileComponent;
+export default ProfileDetails;

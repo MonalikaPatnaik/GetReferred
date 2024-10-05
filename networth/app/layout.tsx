@@ -20,7 +20,6 @@ export default function RootLayout({
       <Head>
         <title>Referrly</title>
         <meta name="description" content="Where Referrals Meet Results" />
-        {/* Add the favicon link manually */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>{children}</body>

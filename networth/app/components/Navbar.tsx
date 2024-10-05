@@ -213,8 +213,8 @@ const Navbar = () => {
                           <Link
                             href={
                               role === "referrer"
-                                ? "/referrer_dashboard"
-                                : "/profile"
+                                ? "/Dashboard"
+                                : "/Profile"
                             }
                             className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                           >
@@ -225,7 +225,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <Link
-                            href="/applications"
+                            href="/Dashboard"
                             className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                           >
                             My Applications
@@ -247,14 +247,14 @@ const Navbar = () => {
                 <ul className="flex flex-col items-center space-y-4 py-4">
                   <li>
                     <Link
-                      href="/login"
+                      href="/LogIn"
                       className="text-gray-600 hover:text-teal-600"
                     >
                       Sign In
                     </Link>
                   </li>
                   <li>
-                    <Link href="/signup">
+                    <Link href="/SignUp">
                       <div className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700">
                         Sign Up
                       </div>
@@ -292,8 +292,8 @@ const Navbar = () => {
                       <Link
                         href={
                           role === "referrer"
-                            ? "/referrer_dashboard"
-                            : "/profile"
+                            ? "/Dashboard"
+                            : "/Profile"
                         }
                         className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                       >
@@ -304,7 +304,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        href="/applications"
+                        href="/Dashboard"
                         className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                       >
                         My Applications
@@ -326,14 +326,14 @@ const Navbar = () => {
             <>
               <div className="ml-6">
                 <Link
-                  href="/login"
+                  href="/LogIn"
                   className="text-gray-600 hover:text-teal-600"
                 >
                   Sign In
                 </Link>
               </div>
               <div className="ml-4">
-                <Link href="/signup">
+                <Link href="/SignUp">
                   <div className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700">
                     Sign Up
                   </div>

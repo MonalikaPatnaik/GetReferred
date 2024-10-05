@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 type Application = {
   id: number;
@@ -58,6 +60,8 @@ const Dashboard: React.FC = () => {
   );
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen bg-blue-50 p-8">
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold text-teal-600 mb-6">
@@ -172,6 +176,8 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import Img from '../../../public/assets/girl.png';
+import Img from '../../public/assets/girl.png';
 import Image from 'next/image';
 
 const Home = () => {

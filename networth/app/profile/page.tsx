@@ -6,7 +6,7 @@ import { firestore, auth } from "../firebase";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import OtherActions from '../components/OtherActions';
-import ProfileComponent from '../components/Profile';
+import ProfileDetails from '../components/Details';
 
 interface UserInfo {
     name: string;
@@ -190,7 +190,7 @@ const ProfilePage = () => {
       </div>
     </div>
     
-    <ProfileComponent />
+    <ProfileDetails />
     <OtherActions />
     <Footer />
     </>

@@ -1,9 +1,10 @@
 'use client';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Home from "./components/Home/Home";
-import Service from "./components/Services/Service";
-import About from "./components/About/About";
+import Home from "./components/Home";
+import Service from "./components/Service";
+import About from "./components/About";
+
 export default function Page() {
   return (
     <>
@@ -14,6 +15,4 @@ export default function Page() {
     <Footer/>
     </>
   );
-
-  
 }
