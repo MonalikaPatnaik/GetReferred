@@ -5,6 +5,8 @@ import { auth, firestore } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 // import { useRouter } from "next/router";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 type Role = "referee" | "referrer";
 
@@ -61,6 +63,8 @@ const Signup = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex items-center justify-center bg-teal-50">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-3xl font-bold text-teal-600 mb-4 text-center">Sign Up</h1>
@@ -168,6 +172,8 @@ const Signup = () => {
         </p>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

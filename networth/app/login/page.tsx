@@ -1,5 +1,6 @@
 "use client";
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
@@ -23,6 +24,8 @@ const Login: React.FC = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex items-center justify-center bg-teal-50">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-3xl font-bold text-teal-600 mb-4 text-center">
@@ -70,6 +73,8 @@ const Login: React.FC = () => {
         </p>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

@@ -39,6 +39,7 @@ const Navbar = () => {
     try {
       await signOut(auth);
       setCurrentUser(null);
+      window.location.href = "/";
     } catch (error) {
       console.error("Error signing out: ", error);
     }
@@ -79,7 +80,9 @@ const Navbar = () => {
             height={50}
             className="object-contain m-2"
           />
-          <h1 className="text-3xl font-bold text-teal-600">Referrly</h1>
+          <Link href="/" className="text-3xl font-bold text-teal-600">
+            Referrly
+          </Link>
         </div>
 
         {/* Hamburger icon for small screens */}
@@ -93,7 +96,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Navigation for large screens */}
         <nav className={`hidden lg:flex-grow lg:flex lg:justify-end`}>
           <ul className="flex space-x-6">
             <li>
