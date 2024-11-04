@@ -85,7 +85,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Hamburger icon for small screens */}
         <div className="lg:hidden">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? (
@@ -143,7 +142,6 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        {/* Hamburger menu for small screens */}
         {isMenuOpen && (
           <nav className="lg:hidden absolute top-full left-0 w-full bg-white shadow-md">
             <ul className="flex flex-col items-center space-y-4 py-4">
@@ -189,7 +187,6 @@ const Navbar = () => {
                   Testimonials
                 </Link>
               </li>
-              {/* <li> */}
               {currentUser ? (
                 <div className="relative">
                   <div
@@ -262,12 +259,10 @@ const Navbar = () => {
                   </li>
                 </ul>
               )}
-              {/* </li> */}
             </ul>
           </nav>
         )}
 
-        {/* User Account/Sign In - Large Screens */}
         <div className="hidden lg:flex lg:items-center">
           {currentUser ? (
             <div className="ml-6 relative">
