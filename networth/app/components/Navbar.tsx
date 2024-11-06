@@ -222,7 +222,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <Link
-                            href="/dashboard"
+                            href="/my-applications"
                             className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                           >
                             My Applications
@@ -299,7 +299,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        href="/dashboard"
+                        href="/my-applications"
                         className="block px-4 py-2 text-gray-700 hover:bg-teal-50"
                       >
                         My Applications
