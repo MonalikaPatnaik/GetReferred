@@ -98,9 +98,9 @@ const Navbar = () => {
         <nav className={`hidden lg:flex-grow lg:flex lg:justify-end`}>
           <ul className="flex space-x-6">
             <li>
-              <Link href="#" className=" text-gray-600 hover:text-teal-600" style={{
+              <Link href="#who-are-we" className="text-gray-600 hover:text-teal-600" style={{
                   borderBottom: "2px solid transparent",
-                  transition: "border-color 0.3s",
+                  transition: "border-color 0.3s ease-in-out",
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.borderBottomColor = "teal")
