@@ -13,10 +13,16 @@ const ApplicationPopup: React.FC<ApplicationPopupProps> = ({ onClose }) => {
   const [coverLetter, setCoverLetter] = useState("");
   const [importFromProfile, setImportFromProfile] = useState(false);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const userId = auth.currentUser.uid;
+    const user = auth.currentUser;
+    if (!user) {
+      console.warn("User is not logged in.");
+      return;
+    }
+    
+    const userId = user.uid;
     const userRef = doc(firestore, `users/${userId}`);
   const applicationsRef = collection(userRef, 'applications'); // Subcollection 'applications' under each user
 
