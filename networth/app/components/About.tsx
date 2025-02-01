@@ -84,18 +84,18 @@ const fadeInUp = {
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-white p-8">
+    <div className=" bg-white py-12">
       <motion.h1
-  className="text-5xl font-bold text-center mb-12 text-gray-800"
-  initial="hidden"
-  animate="visible"
-  variants={fadeInUp}
->
-  Get Referred in <span className="text-teal-600">Top Companies</span>🚀
-</motion.h1>
+        className="text-4xl font-bold text-center mb-8 text-gray-800"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        Get Referred in <span className="text-cyan-400">Top Companies</span>🚀
+      </motion.h1>
 
       <motion.div
-        className="grid grid-cols-3 md:grid-cols-5 gap-8 max-w-6xl mx-auto"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-6xl mx-auto"
         initial="hidden"
         animate="visible"
         variants={{
@@ -105,14 +105,14 @@ const About = () => {
         {companyData.map((company, index) => (
           <motion.div
             key={index}
-            className="flex items-center justify-center p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+            className="flex items-center justify-center p-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             style={{ backgroundColor: "#ebf9ff" }}
             variants={fadeInUp}
           >
             <img
               src={company.logo}
               alt={`${company.name} logo`}
-              className="max-w-full max-h-12 object-contain"
+              className="max-w-full max-h-10 object-contain"
             />
           </motion.div>
         ))}
