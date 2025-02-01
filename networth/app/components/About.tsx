@@ -89,39 +89,10 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-// Team member data
-const teamData = [
-  {
-    name: "Saloni Gupta",
-    role: "Founder",
-    bio: "Upcoming SDE at Wells Fargo",
-  },
-  {
-    name: "Monalika Patnaik",
-    role: "Tech Lead",
-    image: "https://example.com/jane.jpg",
-    bio: "Upcoming SDE at Citi Bank",
-  },
-  {
-    name: "Nitya Singhal",
-    role: "Tech Lead",
-    image: "https://example.com/michael.jpg",
-    bio: "Upcoming SDE at Oracle",
-  },
-  {
-    name: "Riya Agarwal",
-    role: "Founder",
-    image: "https://example.com/sara.jpg",
-    bio: "Upcoming SWE at Microsoft",
-  },
-];
-
-
-
 // About Component
 const About = () => {
   return (
-    <div className=" bg-white py-12">
+    <div className="bg-white py-12 px-6 sm:px-12">
       <motion.h1
         className="text-4xl font-bold text-center mb-8 text-gray-800"
         initial="hidden"
@@ -143,14 +114,14 @@ const About = () => {
         {companyData.map((company, index) => (
           <motion.div
             key={index}
-            className="flex items-center justify-center p-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+            className="flex items-center justify-center p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             style={{ backgroundColor: "#ebf9ff" }}
             variants={fadeInUp}
           >
             <img
               src={company.logo}
               alt={`${company.name} logo`}
-              className="max-w-full max-h-10 object-contain"
+              className="max-w-full max-h-12 object-contain"
             />
           </motion.div>
         ))}

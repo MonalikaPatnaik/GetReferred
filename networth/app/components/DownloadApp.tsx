@@ -15,7 +15,7 @@ const DownloadApp = () => {
         </motion.h2>
 
         <p className="text-lg text-gray-300 max-w-lg mb-8">
-          Experience the best of <span className="text-cyan-400 font-semibold">Referly</span> on your phone.  
+          Experience the best of <span className="text-cyan-400 font-semibold">Referrly</span> on your phone.  
           Download now and stay ahead!
         </p>
 
@@ -40,9 +40,9 @@ const DownloadApp = () => {
       <div className="mt-16 border-t border-gray-600 pt-12 flex flex-col md:flex-row justify-between items-center px-10">
         {/* Branding & Info */}
         <div className="text-center md:text-left">
-          <h3 className="text-3xl font-semibold text-cyan-300">Referly</h3>
+          <h3 className="text-3xl font-semibold text-cyan-300">Referrly</h3>
           <p className="text-gray-400 mt-2 max-w-sm">
-            Revolutionizing referrals. Join the waitlist and be the first to experience Referly.
+            Revolutionizing referrals. Join the waitlist and be the first to experience Referrly.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ const DownloadApp = () => {
 
       {/* Copyright */}
       <div className="text-center text-gray-500 text-sm mt-12">
-        &copy; 2025 Referly. All rights reserved.
+        &copy; 2025 Referrly. All rights reserved.
       </div>
     </div>
   );

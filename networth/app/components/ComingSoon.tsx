@@ -62,15 +62,17 @@ const ComingSoon: React.FC = () => {
         </div>
 
         {/* Subscription Form */}
-        <div className="mt-10">
+        <div className="mt-10 w-full max-w-lg">
           <p className="text-md text-gray-300 mb-2">Be the first to know when we launch:</p>
-          <div className="flex space-x-2">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-2">
+            {/* Email Input */}
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-4 py-2 border border-gray-500 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="px-4 py-2 border border-gray-500 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 w-full sm:w-auto"
             />
-            {/* NEW NOTIFY ME BUTTON */}
+
+            {/* Get Notified Button */}
             <motion.button
               whileHover={{
                 scale: 1.05,
@@ -78,7 +80,7 @@ const ComingSoon: React.FC = () => {
                 transition: { duration: 0.5, repeat: Infinity },
               }}
               whileTap={{ scale: 0.95 }}
-              className="relative px-6 py-2 font-semibold rounded-lg overflow-hidden bg-transparent border-2 border-cyan-400 text-cyan-400 transition-all hover:text-black"
+              className="relative px-6 py-2 font-semibold rounded-lg overflow-hidden bg-transparent border-2 border-cyan-400 text-cyan-400 transition-all hover:text-black sm:w-auto w-full"
             >
               <span className="absolute inset-0 bg-cyan-400 opacity-0 hover:opacity-100 transition-all duration-500"></span>
               <span className="relative z-10">Get Notified</span>
