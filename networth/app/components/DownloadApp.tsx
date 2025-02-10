@@ -16,12 +16,12 @@ const DownloadApp = () => {
 
         <p className="text-lg text-gray-300 max-w-lg mb-8">
           Experience the best of <span className="text-cyan-400 font-semibold">Referrly</span> on your phone.  
-          Download now and stay ahead!
+          Launching soon for both Android and iOS, stay tuned!
         </p>
 
         {/* Google Play Store Button */}
         <motion.a
-          href="https://play.google.com/store"
+          href="https://get-referred.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1 }}
@@ -32,8 +32,9 @@ const DownloadApp = () => {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1920px-Google_Play_Store_badge_EN.svg.png"
             alt="Google Play Store"
             className="w-40 h-auto"
-          />
+          />  
         </motion.a>
+        
       </div>
 
       {/* Footer Section */}
@@ -46,6 +47,28 @@ const DownloadApp = () => {
           </p>
         </div>
         
+
+                {/* Quick Links */}
+                <div className="flex flex-col text-center md:text-left mt-8 md:mt-0">
+          <h4 className="text-xl font-semibold text-gray-200 mb-2">Quick Links</h4>
+          <ul className="text-gray-400 space-y-1">
+            <li><a href="/about" className="hover:text-white">About Us</a></li>
+            <li><a href="/contact" className="hover:text-white">Contact</a></li>
+            <li><a href="/privacy" className="hover:text-white">Privacy Policy</a></li>
+            <li><a href="/terms" className="hover:text-white">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        {/* Social Media Links (Vertical) */}
+        <div className="flex flex-col text-center md:text-left mt-8 md:mt-0">
+          <h4 className="text-xl font-semibold text-gray-200 mb-2">Follow Us</h4>
+          <div className="flex flex-col space-y-4">
+            <a href="#" className="text-gray-400 hover:text-white transition">Twitter</a>
+            <a href="#" className="text-gray-400 hover:text-white transition">Instagram</a>
+            <a href="#" className="text-gray-400 hover:text-white transition">LinkedIn</a>
+          </div>
+        </div>
+
       </div>
 
       {/* Copyright */}
