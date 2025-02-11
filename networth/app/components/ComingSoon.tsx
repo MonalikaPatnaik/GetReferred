@@ -60,7 +60,7 @@ const ComingSoon: React.FC = () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center font-sans px-6 text-center">
+  <div className="min-h-screen flex flex-col justify-center items-center font-sans px-6 text-center pt-20">
       <motion.h1 className="text-6xl font-bold tracking-wide text-cyan-300" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
         Referrly
       </motion.h1>
