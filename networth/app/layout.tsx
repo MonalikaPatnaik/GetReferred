@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Referrly',
   description: 'Where Referrals Meet Results',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/assets/favicon.png',
   },
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
       <Head>
         <title>Referrly</title>
         <meta name="description" content="Where Referrals Meet Results" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <body>{children}</body>
     </html>

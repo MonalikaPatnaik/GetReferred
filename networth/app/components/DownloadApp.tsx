@@ -52,11 +52,11 @@ const DownloadApp: React.FC = () => {
   }, [message]);
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-between text-white font-sans px-6 pt-40 pb-10">
+    <div className="min-h-[80vh] flex flex-col justify-between text-[#EAEAEA] font-sans px-6 pt-20 pb-10">
       {/* Main Download Section */}
-      <div className="flex flex-col items-center text-center pt-30 pb-20">
+      <div className="flex flex-col items-center text-center pb-10">
         <motion.h2
-          className="text-5xl font-bold tracking-wide mb-6 text-cyan-300"
+          className="text-5xl font-bold tracking-wide mb-6 text-[#9FE358]"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -64,14 +64,13 @@ const DownloadApp: React.FC = () => {
           Get the App 🚀 - Launching Soon!
         </motion.h2>
 
-        <p className="text-lg text-gray-300 max-w-lg mb-8">
-          Experience the best of <span className="text-cyan-400 font-semibold">Referrly</span> on your phone.  
+        <p className="text-lg text-[#EAEAEA] max-w-lg mb-8">
+          Experience the best of <span className="text-[#9FE358] font-semibold">Referrly</span> on your phone.  
           Launching soon for both Android and iOS, stay tuned!
         </p>
 
-        {/* Download Buttons */}
+        {/* Download Buttons
         <div className="flex gap-6">
-          {/* Google Play Store Button */}
           <motion.a
             href="https://get-referred.vercel.app/"
             target="_blank"
@@ -87,7 +86,6 @@ const DownloadApp: React.FC = () => {
             />  
           </motion.a>
 
-          {/* iOS App Store Button */}
           <motion.a
             href="https://get-referred.vercel.app/"
             target="_blank"
@@ -102,37 +100,37 @@ const DownloadApp: React.FC = () => {
               className="w-36 h-auto"
             />
           </motion.a>
-        </div>
+        </div> */}
       </div>
 
       {/* Footer Section */}
-      <div className="mt-16 border-t border-gray-600 pt-12 flex flex-col md:flex-row justify-between items-center px-10">
+      <div className="mt-16 border-t border-[#303030] pt-12 flex flex-col md:flex-row justify-between items-center px-10">
         {/* Branding & Info */}
         <div className="text-center md:text-left">
-          <h3 className="text-3xl font-semibold text-cyan-300">Referrly</h3>
-          <p className="text-gray-400 mt-2 max-w-sm">
+          <h3 className="text-3xl font-semibold text-[#9FE358]">Referrly</h3>
+          <p className="text-[#EAEAEA]/70 mt-2 max-w-sm">
             Revolutionizing referrals. Join the waitlist and be the first to experience Referrly.
           </p>
         </div>
 
         {/* Subscribe to Waitlist */}
         <div className="flex flex-col text-center md:text-left mt-8 md:mt-0">
-          <h4 className="text-xl font-semibold text-gray-200 mb-2">Subscribe to Our Waitlist</h4>
-          <p className="text-gray-400 mb-4">Get notified as soon as we launch!</p>
+          <h4 className="text-xl font-semibold text-[#EAEAEA] mb-2">Subscribe to Our Waitlist</h4>
+          <p className="text-[#EAEAEA]/70 mb-4">Get notified as soon as we launch!</p>
 
           <form onSubmit={handleEmailSubmit} className="flex flex-col md:flex-row gap-3">
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-4 py-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="px-4 py-2 rounded-lg bg-[#1A1A1A] text-[#EAEAEA] border border-[#303030] focus:outline-none focus:ring-2 focus:ring-[#9FE358]"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
               type="submit"
-              className="bg-cyan-400 text-black px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500"
+              className="bg-[#9FE358] text-[#121212] px-6 py-2 rounded-lg font-medium hover:bg-[#6FBF44] transition-colors"
             >
-              Subscribe
+              Join waitlist
             </button>
           </form>
 
@@ -143,7 +141,7 @@ const DownloadApp: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className={`mt-4 text-sm ${
-                message.includes("successfully") ? "text-green-400" : "text-red-400"
+                message.includes("successfully") ? "text-[#9FE358]" : "text-red-400"
               }`}
             >
               {message}
@@ -153,7 +151,7 @@ const DownloadApp: React.FC = () => {
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-cyan-300 text-sm mt-12">
+      <div className="text-center text-[#9FE358] text-sm mt-12">
         &copy; 2025 Referrly. All rights reserved.
       </div>
     </div>

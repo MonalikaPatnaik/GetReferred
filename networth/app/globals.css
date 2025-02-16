@@ -5,5 +5,46 @@
 @tailwind utilities;
 
 body {
+ cursor:none;
+}
 
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+    background-color: #9FE358; /* Start color - light green */
+  }
+  50% {
+    background-position: 50% 50%;
+    background-color: #b5ab6e; /* Middle color - lighter yellow */
+  }
+  100% {
+    background-position: 100% 50%;
+    background-color: #115001; /* End color - darker green */
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(270deg, #9FE358, #f1df79, #166203); /* Updated gradient with less yellow */
+  background-size: 400% 400%;
+  animation: gradient-animation 3s ease infinite; /* Increased speed */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.circle {
+ height: 30px;
+ width: 30px;
+ border-radius: 24px;
+ background-color: black;
+ position: fixed; 
+ top: 0;
+ left: 0;
+ pointer-events: none;
+ z-index: 99999999; /* so that it stays on top of all other elements */
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it stays on top */
 }
