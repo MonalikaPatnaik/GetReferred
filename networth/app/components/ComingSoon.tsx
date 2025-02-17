@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { firestore } from "../firebase";
 import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
@@ -15,6 +15,7 @@ const companyData = [
 const ComingSoon: React.FC = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleEmailSubmit = async (email: string) => {
     if (!email) {
@@ -57,6 +58,28 @@ const ComingSoon: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      const handleResize = () => {
+        if (window.innerWidth < 500) {
+          carousel.classList.add('carousel');
+        } else {
+          carousel.classList.remove('carousel');
+        }
+      };
+
+      // Initial check
+      handleResize();
+
+      // Add event listener for resize
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   return (
@@ -112,7 +135,7 @@ const ComingSoon: React.FC = () => {
       {/* Company Logos Section */}
       <div className="w-full overflow-hidden mt-20">
         <div className="border-t border-[#303030] mb-4"></div>
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-4 space-x-12">
+        <div ref={carouselRef} className="max-w-4xl mx-auto flex items-center justify-between px-4 space-x-12">
           {companyData.slice(0, 5).map((company, index) => (
             <div 
               key={index}
@@ -128,6 +151,23 @@ const ComingSoon: React.FC = () => {
         </div>
         <div className="border-b border-[#303030] mt-4"></div>
       </div>
+
+      <style jsx>{`
+        @keyframes carousel {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-100%); }
+        }
+
+        .carousel {
+          display: flex;
+          animation: carousel 10s linear infinite;
+          width: calc(100% * ${companyData.length}); /* Adjust based on the number of logos */
+        }
+
+        .carousel > div {
+          flex: 0 0 auto; /* Prevent shrinking */
+        }
+      `}</style>
     </div>
   );
 };
