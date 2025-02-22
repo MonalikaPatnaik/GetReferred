@@ -41,7 +41,7 @@ const ComingSoon: React.FC = () => {
   };
 
   const calculateTimeLeft = () => {
-    const launchDate = new Date("2025-02-28T23:59:59");
+    const launchDate = new Date("2025-03-15T23:59:59");
     const now = new Date().getTime();
     const difference = launchDate.getTime() - now;
     return difference > 0
