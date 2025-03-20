@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { firestore } from "../firebase";
-import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+// import { firestore } from "../firebase";
+// import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 
 // Company logo data
 const companyData = [
@@ -22,22 +22,22 @@ const ComingSoon: React.FC = () => {
       setMessage("Please enter a valid email.");
       return;
     }
-    try {
-      const emailDocRef = doc(firestore, "emails", "emailsList");
-      const emailDocSnap = await getDoc(emailDocRef);
-      if (emailDocSnap.exists() && emailDocSnap.data().emails.includes(email)) {
-        setMessage("This email is already subscribed!");
-        return;
-      }
-      emailDocSnap.exists()
-        ? await updateDoc(emailDocRef, { emails: arrayUnion(email) })
-        : await setDoc(emailDocRef, { emails: [email] });
-      setMessage("You've been successfully subscribed!");
-      setEmail("");
-    } catch (e) {
-      console.error("Error adding email: ", e);
-      setMessage("Something went wrong. Please try again.");
-    }
+    // try {
+    //   const emailDocRef = doc(firestore, "emails", "emailsList");
+    //   const emailDocSnap = await getDoc(emailDocRef);
+    //   if (emailDocSnap.exists() && emailDocSnap.data().emails.includes(email)) {
+    //     setMessage("This email is already subscribed!");
+    //     return;
+    //   }
+    //   emailDocSnap.exists()
+    //     ? await updateDoc(emailDocRef, { emails: arrayUnion(email) })
+    //     : await setDoc(emailDocRef, { emails: [email] });
+    //   setMessage("You've been successfully subscribed!");
+    //   setEmail("");
+    // } catch (e) {
+    //   console.error("Error adding email: ", e);
+    //   setMessage("Something went wrong. Please try again.");
+    // }
   };
 
   const calculateTimeLeft = () => {

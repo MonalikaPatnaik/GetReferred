@@ -1,81 +1,140 @@
 "use client";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { useState } from 'react';
+import Link from 'next/link';
+import Navbar from '../components/Navbar';
+import ImageComponent from '../components/ImageComponent';
+import OtpVerification from '../components/OtpVerification';
 
-type Role = "referee" | "referrer";
+const LoginPage = () => {
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Email validation function
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User signed in:", userCredential.user);
-      window.location.assign("/");
-    } catch (error: any) {
-      console.error("Error logging in:", error);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    
+    // Clear error when user types
+    if (emailError) {
+      setEmailError('');
     }
   };
 
+  const handleContinue = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate email
+    if (!email) {
+      setEmailError('Email is required');
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    // Simulate API call to send OTP
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setStep(2);
+      // In a real app, you would call your API to send OTP to the user's email
+      console.log('Sending OTP to:', email);
+    }, 1500);
+  };
+
+  const handleOtpVerification = (otpValue: string) => {
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      // In a real app, you would verify the OTP with your backend
+      console.log('OTP submitted:', otpValue);
+      alert('Login successful!');
+    }, 1500);
+  };
+
+  const handleBackFromOtp = () => {
+    setStep(1);
+  };
+
   return (
-    <>
-    <Navbar />
-    <div className="min-h-screen flex items-center justify-center bg-teal-50">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-3xl font-bold text-teal-600 mb-4 text-center">
-          Login
-        </h1>
-
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-teal-700">Email</label>
-            <input
-              type="email"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-teal-600"
-              placeholder="Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      
+      <main className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Welcome Back</h2>
+          <p className="text-lg text-gray-600 mb-8">Log in to your Referrlyy account</p>
+          
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {step === 1 ? (
+              <form onSubmit={handleContinue}>
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-1">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    className={`w-full px-3 py-2 border ${emailError ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent`}
+                    placeholder="Enter your email"
+                    required
+                    value={email}
+                    onChange={handleEmailChange}
+                  />
+                  {emailError && (
+                    <p className="mt-1 text-sm text-red-500">{emailError}</p>
+                  )}
+                </div>
+                
+                <button 
+                  type="submit" 
+                  className="w-full bg-[#118B50] text-white py-2 px-4 rounded-md hover:bg-[#0f753a] transition-colors mt-6 flex justify-center items-center"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span className="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                  ) : null}
+                  Continue
+                </button>
+                <p className="mt-4 text-center text-sm text-gray-600">
+                  Don&apos;t have an account? <Link href="/onboarding" className="text-[#118B50] hover:underline">Sign up</Link>
+                </p>
+              </form>
+            ) : (
+              <OtpVerification 
+                email={email}
+                onVerify={handleOtpVerification}
+                onBack={handleBackFromOtp}
+                isSubmitting={isSubmitting}
+              />
+            )}
           </div>
-          <div className="mb-4">
-            <label className="block text-teal-700">Password</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-teal-600"
-              placeholder="Your Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition-colors"
-          >
-            Login
-          </button>
-        </form>
-
-        {/* Don't have an account */}
-        <p className="mt-4 text-center">
-          Don&apos;t have an account?{" "}
-          <a href="/signup" className="text-teal-600 hover:underline">
-            Sign up here
-          </a>
-        </p>
-      </div>
+        </div>
+        
+        <div className="w-full md:w-1/2 flex items-center justify-center">
+          <ImageComponent 
+            src="/assets/onboard.jpg" 
+            alt="Referral Illustration" 
+            width={500}
+            height={400}
+            priority={true}
+          />
+        </div>
+      </main>
     </div>
-    <Footer />
-    </>
   );
 };
 
-export default Login;
+export default LoginPage;
