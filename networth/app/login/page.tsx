@@ -4,55 +4,46 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import ImageComponent from '../components/ImageComponent';
+import { ApiService } from '../services/apiService';
 
 const LoginPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  // Email validation function
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    
-    // Clear error when user types
-    if (emailError) {
-      setEmailError('');
-    }
-  };
-
-  const handleContinue = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate email
     if (!email) {
-      setEmailError('Email is required');
-      return;
-    }
-    
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setError('Please enter your email');
       return;
     }
     
     setIsSubmitting(true);
+    setError('');
     
-    // Simulate API call to send OTP
-    setTimeout(() => {
+    try {
+      // Check if email exists in referrers table
+      const isReferrer = await ApiService.checkReferrerEmailExists(email);
+      
+      if (!isReferrer) {
+        setError('No account found with this email. Please sign up first.');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Send OTP via API
+      await ApiService.sendOTP(email);
+      
+      // Redirect to OTP verification page with correct user type
+      router.push(`/verify-otp?email=${encodeURIComponent(email)}&userType=referrer`);
+    } catch (error: any) {
+      console.error('Login error:', error);
+      setError(error.message || 'Failed to send verification code');
+    } finally {
       setIsSubmitting(false);
-      
-      // Redirect to OTP verification page
-      router.push(`/verify-otp?email=${encodeURIComponent(email)}&userType=login`);
-      
-      // In a real app, you would call your API to send OTP to the user's email
-      console.log('Sending OTP to:', email);
-    }, 1500);
+    }
   };
 
   return (
@@ -65,7 +56,7 @@ const LoginPage = () => {
           <p className="text-lg text-gray-600 mb-8">Log in to your Referrly account</p>
           
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <form onSubmit={handleContinue}>
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-1">
                   Email Address <span className="text-red-500">*</span>
@@ -73,14 +64,14 @@ const LoginPage = () => {
                 <input
                   type="email"
                   id="email"
-                  className={`w-full px-3 py-2 border ${emailError ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent`}
+                  className={`w-full px-3 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent`}
                   placeholder="Enter your email"
                   required
                   value={email}
-                  onChange={handleEmailChange}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                {emailError && (
-                  <p className="mt-1 text-sm text-red-500">{emailError}</p>
+                {error && (
+                  <p className="mt-1 text-sm text-red-500">{error}</p>
                 )}
               </div>
               

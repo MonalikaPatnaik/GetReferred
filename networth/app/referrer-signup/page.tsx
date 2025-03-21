@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import ImageComponent from '../components/ImageComponent';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { ApiService } from '../services/apiService';
 
 const ReferrerSignupPage = () => {
   const router = useRouter();
@@ -71,15 +72,22 @@ const ReferrerSignupPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
-
+    
+    try {
+      // Store form data in sessionStorage for use after OTP verification
+      sessionStorage.setItem('signupFormData', JSON.stringify(formData));
+      
+      // Send OTP to the user's email
+      await ApiService.sendOTP(formData.email);
       
       // Redirect to OTP verification page with email and user type
       router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=referrer`);
-    
+    } catch (error: any) {
+      console.error('Error sending OTP:', error);
+      setEmailError(error.message || 'Failed to send verification code. Please try again.');
+    }
   };
 
   const handleBack = () => {
