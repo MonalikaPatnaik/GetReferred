@@ -29,13 +29,17 @@ export interface RefereeData {
 }
 
 export class ApiService {
-  static async sendOTP(email: string): Promise<void> {
+  static async sendOTP(email: string, userType?: 'referrer' | 'signup'): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/auth/send-otp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ 
+        email,
+        userType,
+        checkExistence: userType === 'referrer' // Only check existence for login
+      }),
     });
 
     if (!response.ok) {

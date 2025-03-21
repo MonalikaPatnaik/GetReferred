@@ -80,10 +80,10 @@ const ReferrerSignupPage = () => {
       sessionStorage.setItem('signupFormData', JSON.stringify(formData));
       
       // Send OTP to the user's email
-      await ApiService.sendOTP(formData.email);
+      await ApiService.sendOTP(formData.email, 'signup');
       
       // Redirect to OTP verification page with email and user type
-      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=referrer`);
+      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=signup`);
     } catch (error: any) {
       console.error('Error sending OTP:', error);
       setEmailError(error.message || 'Failed to send verification code. Please try again.');

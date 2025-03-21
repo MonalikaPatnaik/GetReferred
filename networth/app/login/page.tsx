@@ -24,23 +24,20 @@ const LoginPage = () => {
     setError('');
     
     try {
-      // Check if email exists in referrers table
-      const isReferrer = await ApiService.checkReferrerEmailExists(email);
-      
-      if (!isReferrer) {
-        setError('No account found with this email. Please sign up first.');
-        setIsSubmitting(false);
-        return;
-      }
-      
-      // Send OTP via API
-      await ApiService.sendOTP(email);
+      // Send OTP via API - the backend will check if the email exists
+      await ApiService.sendOTP(email, 'referrer');
       
       // Redirect to OTP verification page with correct user type
       router.push(`/verify-otp?email=${encodeURIComponent(email)}&userType=referrer`);
     } catch (error: any) {
       console.error('Login error:', error);
-      setError(error.message || 'Failed to send verification code');
+      
+      // Handle specific error for non-existent email
+      if (error.message?.includes('not found') || error.message?.includes('No account')) {
+        setError('No account found with this email. Please sign up first.');
+      } else {
+        setError(error.message || 'Failed to send verification code');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -56,6 +53,12 @@ const LoginPage = () => {
           <p className="text-lg text-gray-600 mb-8">Log in to your Referrly account</p>
           
           <div className="bg-white p-6 rounded-lg shadow-md">
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
+                {error}
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-1">
@@ -70,9 +73,6 @@ const LoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {error && (
-                  <p className="mt-1 text-sm text-red-500">{error}</p>
-                )}
               </div>
               
               <button 

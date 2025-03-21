@@ -40,14 +40,12 @@ function VerifyOtpContent() {
 
   // Handle verification for referrer users
   const handleReferrerVerification = async (email: string, otpValue: string) => {
-    // Check if this is a signup or login attempt
-    const isSignup = !!formData;
-    
     try {
       // Check if the referrer exists
       const referrerExists = await ApiService.checkReferrerEmailExists(email);
       
-      if (isSignup) {
+      // If coming from signup page with form data, this is a signup attempt
+      if (formData && userType === 'signup') {
         // This is a signup attempt
         if (referrerExists) {
           // If the user already exists, show an error
@@ -100,7 +98,7 @@ function VerifyOtpContent() {
         throw new Error('Invalid login attempt. Please try again from the login page.');
       }
       
-      if (userType === 'referrer') {
+      if (userType === 'referrer' || userType === 'signup') {
         await handleReferrerVerification(email, otpValue);
       } else if (userType === 'referee') {
         throw new Error('Referee login is not available yet. Please use referrer login.');

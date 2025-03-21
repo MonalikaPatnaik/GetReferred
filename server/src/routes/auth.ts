@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Send OTP
 const sendOTP: RequestHandler = async (req, res) => {
-  const { email } = req.body;
+  const { email, checkExistence = true, userType } = req.body;
 
   if (!email) {
     res.status(400).json({ error: 'Email is required' });
@@ -13,6 +13,22 @@ const sendOTP: RequestHandler = async (req, res) => {
   }
 
   try {
+    // If we need to check if the email exists (for login)
+    if (checkExistence && userType === 'referrer') {
+      // Check if the email exists in the referrers table
+      const { data: referrer, error: referrerError } = await supabase
+        .from('referrers')
+        .select('email_company')
+        .eq('email_company', email)
+        .single();
+
+      if (referrerError || !referrer) {
+        res.status(404).json({ error: 'No account found with this email. Please sign up first.' });
+        return;
+      }
+    }
+
+    // Send the OTP
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
