@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect  } from 'react';
+// import  from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from "../components/Navbar";
 import OtpVerification from "../components/OtpVerification";
@@ -41,12 +42,9 @@ const VerifyOtpPage = () => {
       // Redirect based on user type after successful verification
       if (userType === 'referee') {
         alert('Referee signup successful!');
-        router.push('/referee-dashboard');
-      } else if (userType === 'referrer') {
-        alert('Referrer signup successful!');
-        router.push('/referrer-dashboard');
+        router.push('/my-applications');
       } else {
-        alert('Login successful!');
+        alert('Referrer signup successful!');
         router.push('/dashboard');
       }
     }, 1500);
@@ -64,24 +62,26 @@ const VerifyOtpPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <Suspense fallback={<div>Loading...</div>}>
       <Navbar />
-      <div className="max-w-md mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
-            <p className="text-gray-600">We&apos;ve sent a verification code to your email</p>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-md mx-auto px-4 py-8">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
+              <p className="text-gray-600">We&apos;ve sent a verification code to your email</p>
+            </div>
+            
+            <OtpVerification 
+              email={email} 
+              onVerify={handleVerify} 
+              onBack={handleBack}
+              isSubmitting={isSubmitting}
+            />
           </div>
-          
-          <OtpVerification 
-            email={email} 
-            onVerify={handleVerify} 
-            onBack={handleBack}
-            isSubmitting={isSubmitting}
-          />
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 
