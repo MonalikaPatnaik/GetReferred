@@ -1,13 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-// Load environment variables
-const result = dotenv.config();
+// // Load environment variables
+// const result = dotenv.config();
 
-if (result.error) {
-  console.error('Error loading .env file:', result.error);
-  process.exit(1);
-}
+// if (result.error) {
+//   console.error('Error loading .env file:', result.error);
+//   process.exit(1);
+// }
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
