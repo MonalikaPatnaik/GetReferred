@@ -55,7 +55,7 @@ const VerifyOtpPage = () => {
   const handleBack = () => {
     // Redirect back based on user type
     if (userType === 'referee') {
-      router.push('/referee-signup');
+      router.push('/my-applications');
     } else if (userType === 'referrer') {
       router.push('/referrer-signup');
     } else {
