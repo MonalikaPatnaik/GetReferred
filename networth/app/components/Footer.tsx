@@ -38,7 +38,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="mt-8 text-center">
-        <p> Referrly &copy;{new Date().getFullYear()}&nbsp; All rights reserved.</p>
+        <p> Referrlyy &copy;{new Date().getFullYear()}&nbsp; All rights reserved.</p>
       </div>
     </div>
   </footer>

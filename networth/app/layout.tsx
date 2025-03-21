@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Head from 'next/head';
 
 export const metadata: Metadata = {
-  title: 'Referrly',
+  title: 'Referrlyy',
   description: 'Where Referrals Meet Results',
   icons: {
     icon: '/assets/favicon.png',
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <title>Referrly</title>
+        <title>Referrlyy</title>
         <meta name="description" content="Where Referrals Meet Results" />
         <link rel="icon" href="/assets/favicon.ico" />
       </Head>

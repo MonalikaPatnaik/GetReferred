@@ -65,11 +65,11 @@ const DownloadApp: React.FC = () => {
         </motion.h2>
 
         <p className="text-lg text-[#EAEAEA] max-w-lg mb-8">
-          Experience the best of <span className="text-[#9FE358] font-semibold">Referrly</span> on your phone.  
+          Experience the best of <span className="text-[#9FE358] font-semibold">Referrlyy</span> on your phone.  
           Launching soon for both Android and iOS, stay tuned!
         </p>
 
-        {/* Download Buttons
+        Download Buttons
         <div className="flex gap-6">
           <motion.a
             href="https://get-referred.vercel.app/"
@@ -100,14 +100,14 @@ const DownloadApp: React.FC = () => {
               className="w-36 h-auto"
             />
           </motion.a>
-        </div> */}
+        </div>
       </div>
 
       {/* Footer Section */}
       <div className="mt-16 border-t border-[#303030] pt-12 flex flex-col md:flex-row justify-between items-center px-10">
         {/* Branding & Info */}
         <div className="text-center md:text-left">
-          <h3 className="text-3xl font-semibold text-[#9FE358]">Referrly</h3>
+          <h3 className="text-3xl font-semibold text-[#9FE358]">Referrlyy</h3>
           <p className="text-[#EAEAEA]/70 mt-2 max-w-sm">
             Revolutionizing referrals. Join the waitlist and be the first to experience Referrly.
           </p>
@@ -152,7 +152,7 @@ const DownloadApp: React.FC = () => {
 
       {/* Copyright */}
       <div className="text-center text-[#9FE358] text-sm mt-12">
-        &copy; 2025 Referrly. All rights reserved.
+        &copy; 2025 Referrlyy. All rights reserved.
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ const ComingSoon: React.FC = () => {
   };
 
   const calculateTimeLeft = () => {
-    const launchDate = new Date("2025-03-15T23:59:59");
+    const launchDate = new Date("2025-03-26T23:59:59");
     const now = new Date().getTime();
     const difference = launchDate.getTime() - now;
     return difference > 0
@@ -90,7 +90,7 @@ const ComingSoon: React.FC = () => {
         initial={{ opacity: 0, y: -30 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 1 }}>
-        Referrly
+        Referrlyy
       </motion.h1>
       <p className="text-[#EAEAEA] text-lg max-w-lg mt-4">No More Cold DMs. No More Referral Spam. Just the Right Connections.</p>
       <div className="flex space-x-8 mt-10">
