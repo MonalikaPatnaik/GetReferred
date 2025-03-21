@@ -1,16 +1,15 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
-import Link from 'next/link';
 import ImageComponent from '../components/ImageComponent';
-import OtpVerification from '../components/OtpVerification';
-import { ArrowLeft } from 'lucide-react';
+import { Link, ArrowLeft } from 'lucide-react';
 
 const ReferrerSignupPage = () => {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [emailError, setEmailError] = useState('');
   const [linkedinError, setLinkedinError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -62,7 +61,9 @@ const ReferrerSignupPage = () => {
     if (isValid) {
       // Here you would typically send the data to your backend
       console.log('Form submitted:', formData);
-      setStep(2); // Move to OTP verification step
+      
+      // Redirect to OTP verification page with email and user type
+      router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=referrer`);
     }
   };
 
@@ -72,19 +73,6 @@ const ReferrerSignupPage = () => {
 
   const handleBackFromOtp = () => {
     setStep(2);
-  };
-
-  const handleOtpVerification = (otpValue: string) => {
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // In a real app, you would verify the OTP with your backend
-      console.log('OTP submitted:', otpValue);
-      alert('Signup successful!');
-      // Redirect or show success message
-    }, 1500);
   };
 
   return (
@@ -233,77 +221,71 @@ const ReferrerSignupPage = () => {
                 Already a referrer? <Link href="/login" className="text-[#118B50]">Login</Link>
                 </p>
               </form>
-            ) :step === 2 ?(              <form onSubmit={handleSubmit}>
-              <div className="border-b border-gray-200 mb-6 pb-4">
-                <h3 className="text-lg font-medium text-gray-800">Additional Information</h3>
-                <p className="text-sm text-gray-600">These fields are optional but help us know you better</p>
-              </div>
-              
-              <div className="mb-4">
-                <label htmlFor="personalEmail" className="block text-gray-700 text-sm font-medium mb-1">
-                  Personal Email
-                </label>
-                <input
-                  type="email"
-                  id="personalEmail"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
-                  placeholder="Enter your personal email"
-                  value={formData.personalEmail}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label htmlFor="twitterUrl" className="block text-gray-700 text-sm font-medium mb-1">
-                  Twitter URL
-                </label>
-                <input
-                  type="url"
-                  id="twitterUrl"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
-                  placeholder="https://twitter.com/username"
-                  value={formData.twitterUrl}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label htmlFor="portfolioUrl" className="block text-gray-700 text-sm font-medium mb-1">
-                  Portfolio URL
-                </label>
-                <input
-                  type="url"
-                  id="portfolioUrl"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
-                  placeholder="https://yourportfolio.com"
-                  value={formData.portfolioUrl}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="flex space-x-4 mt-6">
-                <button 
-                  type="button" 
-                  className="flex items-center justify-center w-12 h-10 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors"
-                  onClick={handleBack}
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <button 
-                  type="submit" 
-                  className="w-1/2 bg-[#118B50] text-white py-2 px-4 rounded-md hover:bg-[#0f753a] transition-colors"
-                >
-                  Create Account
-                </button>
-              </div>
-            </form>
-): (
-              <OtpVerification 
-                email={formData.email}
-                onVerify={handleOtpVerification}
-                onBack={() => setStep(1)}
-                isSubmitting={isSubmitting}
-              />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="border-b border-gray-200 mb-6 pb-4">
+                  <h3 className="text-lg font-medium text-gray-800">Additional Information</h3>
+                  <p className="text-sm text-gray-600">These fields are optional but help us know you better</p>
+                </div>
+                
+                <div className="mb-4">
+                  <label htmlFor="personalEmail" className="block text-gray-700 text-sm font-medium mb-1">
+                    Personal Email
+                  </label>
+                  <input
+                    type="email"
+                    id="personalEmail"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
+                    placeholder="Enter your personal email"
+                    value={formData.personalEmail}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label htmlFor="twitterUrl" className="block text-gray-700 text-sm font-medium mb-1">
+                    Twitter URL
+                  </label>
+                  <input
+                    type="url"
+                    id="twitterUrl"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
+                    placeholder="https://twitter.com/username"
+                    value={formData.twitterUrl}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label htmlFor="portfolioUrl" className="block text-gray-700 text-sm font-medium mb-1">
+                    Portfolio URL
+                  </label>
+                  <input
+                    type="url"
+                    id="portfolioUrl"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
+                    placeholder="https://yourportfolio.com"
+                    value={formData.portfolioUrl}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                <div className="flex space-x-4 mt-6">
+                  <button 
+                    type="button" 
+                    className="flex items-center justify-center w-12 h-10 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors"
+                    onClick={() => setStep(1)}
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <button 
+                    type="submit" 
+                    className="w-1/2 bg-[#118B50] text-white py-2 px-4 rounded-md hover:bg-[#0f753a] transition-colors"
+                  >
+                    Create Account
+                  </button>
+                </div>
+              </form>
             )}
           </div>
         </div>

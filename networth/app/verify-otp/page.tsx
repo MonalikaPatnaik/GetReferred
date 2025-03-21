@@ -1,158 +1,88 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Navbar from "../components/Navbar";
+import OtpVerification from "../components/OtpVerification";
 
-interface OtpVerificationProps {
-  email: string;
-  onVerify: (otpValue: string) => void;
-  onBack: () => void;
-  isSubmitting?: boolean;
-}
-
-const OtpVerification = ({ email, onVerify, onBack, isSubmitting = false }: OtpVerificationProps) => {
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
-  const [resendDisabled, setResendDisabled] = useState(true);
-  const [countdown, setCountdown] = useState(30);
+const VerifyOtpPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState('');
+  const [userType, setUserType] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    // Get email and userType from URL parameters
+    const emailParam = searchParams.get('email');
+    const userTypeParam = searchParams.get('userType');
     
-    if (resendDisabled && countdown > 0) {
-      timer = setTimeout(() => {
-        setCountdown(prev => prev - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      setResendDisabled(false);
+    if (emailParam) {
+      setEmail(emailParam);
+    } else {
+      // Redirect to home if no email provided
+      router.push('/');
     }
     
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [countdown, resendDisabled]);
+    if (userTypeParam) {
+      setUserType(userTypeParam);
+    }
+  }, [searchParams, router]);
 
-  const handleOtpChange = (index: number, value: string) => {
-    // Only allow numbers
-    if (value && !/^\d*$/.test(value)) return;
-
-    // Update the OTP array
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-
-    // Auto-focus next input if value is entered
-    if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      if (nextInput) {
-        nextInput.focus();
+  const handleVerify = (otpValue: string) => {
+    setIsSubmitting(true);
+    
+    // Simulate API call to verify OTP
+    setTimeout(() => {
+      setIsSubmitting(false);
+      
+      // In a real app, you would verify the OTP with your backend
+      console.log("OTP entered:", otpValue, "for email:", email, "user type:", userType);
+      
+      // Redirect based on user type after successful verification
+      if (userType === 'referee') {
+        alert('Referee signup successful!');
+        router.push('/referee-dashboard');
+      } else if (userType === 'referrer') {
+        alert('Referrer signup successful!');
+        router.push('/referrer-dashboard');
+      } else {
+        alert('Login successful!');
+        router.push('/dashboard');
       }
-    }
+    }, 1500);
   };
 
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Handle backspace to move to previous input
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`);
-      if (prevInput) {
-        prevInput.focus();
-      }
+  const handleBack = () => {
+    // Redirect back based on user type
+    if (userType === 'referee') {
+      router.push('/referee-signup');
+    } else if (userType === 'referrer') {
+      router.push('/referrer-signup');
+    } else {
+      router.push('/login');
     }
-  };
-
-  const handleResendOtp = () => {
-    // Reset OTP fields
-    setOtp(['', '', '', '', '', '']);
-    
-    // Focus on first input
-    const firstInput = document.getElementById('otp-0');
-    if (firstInput) {
-      firstInput.focus();
-    }
-    
-    // Disable resend button and start countdown
-    setResendDisabled(true);
-    setCountdown(30);
-    
-    // In a real app, you would call your API to resend OTP
-    console.log('Resending OTP to:', email);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const otpValue = otp.join('');
-    
-    // Check if OTP is complete
-    if (otpValue.length !== 6) {
-      alert('Please enter the complete 6-digit OTP');
-      return;
-    }
-    
-    // Call the parent component's verification handler
-    onVerify(otpValue);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="border-b border-gray-200 mb-6 pb-4">
-        <h3 className="text-lg font-medium text-gray-800">Verify Your Email</h3>
-        <p className="text-sm text-gray-600">We&apos;ve sent a 6-digit code to {email}</p>
-      </div>
-      
-      <div className="mb-6">
-        <label className="block text-gray-700 text-sm font-medium mb-3">
-          Enter Verification Code
-        </label>
-        <div className="flex justify-between gap-2">
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              id={`otp-${index}`}
-              type="text"
-              maxLength={1}
-              className="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#118B50] focus:border-transparent"
-              value={digit}
-              onChange={(e) => handleOtpChange(index, e.target.value)}
-              onKeyDown={(e) => handleOtpKeyDown(index, e)}
-              autoFocus={index === 0}
-            />
-          ))}
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <div className="max-w-md mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
+            <p className="text-gray-600">We&apos;ve sent a verification code to your email</p>
+          </div>
+          
+          <OtpVerification 
+            email={email} 
+            onVerify={handleVerify} 
+            onBack={handleBack}
+            isSubmitting={isSubmitting}
+          />
         </div>
-        <p className="mt-3 text-sm text-gray-600">
-          {resendDisabled ? (
-            <span>Resend code in {countdown}s</span>
-          ) : (
-            <button 
-              type="button" 
-              className="text-[#118B50] hover:underline"
-              onClick={handleResendOtp}
-            >
-              Resend code
-            </button>
-          )}
-        </p>
       </div>
-      
-      <div className="flex space-x-4 mt-6">
-        <button 
-          type="button" 
-          className="flex items-center justify-center w-12 h-10 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors"
-          onClick={onBack}
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-        <button 
-          type="submit" 
-          className="flex-1 bg-[#118B50] text-white py-2 px-4 rounded-md hover:bg-[#0f753a] transition-colors flex justify-center items-center"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <span className="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
-          ) : null}
-          Verify
-        </button>
-      </div>
-    </form>
+    </div>
   );
 };
 
-export default OtpVerification;
+export default VerifyOtpPage;

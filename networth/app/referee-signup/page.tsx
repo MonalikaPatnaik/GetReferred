@@ -1,16 +1,16 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import ImageComponent from '../components/ImageComponent';
-import OtpVerification from '../components/OtpVerification';
 
 const RefereeSignupPage = () => {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [emailError, setEmailError] = useState('');
   const [linkedinError, setLinkedinError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -76,28 +76,13 @@ const RefereeSignupPage = () => {
     e.preventDefault();
     // Here you would typically send the data to your backend
     console.log('Form submitted:', formData);
-    setStep(3); // Move to OTP verification step
-  };
-
-  const handleOtpVerification = (otpValue: string) => {
-    setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // In a real app, you would verify the OTP with your backend
-      console.log('OTP submitted:', otpValue);
-      alert('Signup successful!');
-      // Redirect or show success message
-    }, 1500);
+    // Redirect to OTP verification page with email and user type
+    router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=referee`);
   };
 
   const handleBack = () => {
     setStep(1);
-  };
-
-  const handleBackFromOtp = () => {
-    setStep(2);
   };
 
   return (
@@ -209,7 +194,7 @@ const RefereeSignupPage = () => {
                   Already a referee? <Link href="/login" className="text-[#118B50]">Login</Link>
                 </p>
               </form>
-            ) : step === 2 ? (
+            ) : (
               <form onSubmit={handleSubmit}>
                 <div className="border-b border-gray-200 mb-6 pb-4">
                   <h3 className="text-lg font-medium text-gray-800">Additional Information</h3>
@@ -303,13 +288,6 @@ const RefereeSignupPage = () => {
                   </button>
                 </div>
               </form>
-            ) : (
-              <OtpVerification 
-                email={formData.email}
-                onVerify={handleOtpVerification}
-                onBack={handleBackFromOtp}
-                isSubmitting={isSubmitting}
-              />
             )}
           </div>
         </div>
