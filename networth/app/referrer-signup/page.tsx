@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import ImageComponent from '../components/ImageComponent';
-import { Link, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 const ReferrerSignupPage = () => {
   const router = useRouter();
@@ -22,8 +23,6 @@ const ReferrerSignupPage = () => {
     twitterUrl: '',
     portfolioUrl: '',
     role: '',
-    referralHistory: '',
-    interests: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,32 +38,48 @@ const ReferrerSignupPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  // LinkedIn validation function
+  const validateLinkedIn = (url: string) => {
+    const regex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[\w-]+\/?$/;
+    return regex.test(url);
+  };
+
+  const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
     
     let isValid = true;
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    // Validate email
+    if (!validateEmail(formData.email)) {
       setEmailError('Please enter a valid email address');
       isValid = false;
     }
     
-    // LinkedIn validation
-    const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[\w-]+\/?$/;
-    if (!linkedinRegex.test(formData.linkedin)) {
+    // Validate LinkedIn
+    if (!validateLinkedIn(formData.linkedin)) {
       setLinkedinError('Please enter a valid LinkedIn profile URL (e.g., https://linkedin.com/in/username)');
       isValid = false;
     }
     
     if (isValid) {
-      // Here you would typically send the data to your backend
-      console.log('Form submitted:', formData);
+      setStep(2);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the data to your backend
+    console.log('Form submitted:', formData);
+
       
       // Redirect to OTP verification page with email and user type
       router.push(`/verify-otp?email=${encodeURIComponent(formData.email)}&userType=referrer`);
-    }
+    
   };
 
   const handleBack = () => {
@@ -86,7 +101,7 @@ const ReferrerSignupPage = () => {
           
           <div className="bg-white p-6 rounded-lg shadow-md">
             {step === 1 ? (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleContinue}>
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-gray-700 text-sm font-medium mb-1">
                     Full Name <span className="text-red-500">*</span>

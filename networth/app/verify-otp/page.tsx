@@ -1,11 +1,11 @@
 "use client";
-import React, { Suspense, useState, useEffect  } from 'react';
-// import  from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from "../components/Navbar";
 import OtpVerification from "../components/OtpVerification";
 
-const VerifyOtpPage = () => {
+// Create a client component that uses useSearchParams
+function VerifyOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
@@ -42,9 +42,9 @@ const VerifyOtpPage = () => {
       // Redirect based on user type after successful verification
       if (userType === 'referee') {
         alert('Referee signup successful!');
-        router.push('/my-applications');
+        router.push('/referee-dashboard');
       } else {
-        alert('Referrer signup successful!');
+        alert('Login successful!');
         router.push('/dashboard');
       }
     }, 1500);
@@ -53,7 +53,7 @@ const VerifyOtpPage = () => {
   const handleBack = () => {
     // Redirect back based on user type
     if (userType === 'referee') {
-      router.push('/my-applications');
+      router.push('/referee-signup');
     } else if (userType === 'referrer') {
       router.push('/referrer-signup');
     } else {
@@ -62,26 +62,50 @@ const VerifyOtpPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Navbar />
-      <div className="min-h-screen bg-white">
-        <div className="max-w-md mx-auto px-4 py-8">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
-              <p className="text-gray-600">We&apos;ve sent a verification code to your email</p>
-            </div>
-            
-            <OtpVerification 
-              email={email} 
-              onVerify={handleVerify} 
-              onBack={handleBack}
-              isSubmitting={isSubmitting}
-            />
-          </div>
+    <div className="max-w-md mx-auto px-4 py-8">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
+          <p className="text-gray-600">We&apos;ve sent a verification code to your email</p>
+        </div>
+        
+        <OtpVerification 
+          email={email} 
+          onVerify={handleVerify} 
+          onBack={handleBack}
+          isSubmitting={isSubmitting}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Loading fallback component
+function VerifyOtpLoading() {
+  return (
+    <div className="max-w-md mx-auto px-4 py-8">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
+          <p className="text-gray-600">Loading verification...</p>
+        </div>
+        <div className="flex justify-center items-center py-10">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#118B50]"></div>
         </div>
       </div>
-    </Suspense>
+    </div>
+  );
+}
+
+// Main page component that wraps the content in a Suspense boundary
+const VerifyOtpPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <Suspense fallback={<VerifyOtpLoading />}>
+        <VerifyOtpContent />
+      </Suspense>
+    </div>
   );
 };
 
